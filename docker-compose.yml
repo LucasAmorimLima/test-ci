@@ -4,7 +4,7 @@ services:
     container_name: strapi
     build: .
     image: strapi:latest
-    restart: unless-stopped
+    restart: on-failure
     env_file: .env
     environment:
       DATABASE_CLIENT: ${DATABASE_CLIENT}
@@ -29,11 +29,11 @@ services:
       - strapi
     depends_on:
       - strapiDB
-      
+
   strapiDB:
     container_name: strapiDB
     platform: linux/amd64 #for platform error on Apple M1 chips
-    restart: unless-stopped
+    restart: on-failure
     env_file: .env
     image: postgres:14.5-alpine
     environment:
@@ -51,6 +51,7 @@ services:
 
 volumes:
   strapi-data:
+
 
 networks:
   strapi:
